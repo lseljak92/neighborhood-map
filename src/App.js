@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Map from './Map.js'
+import Menu from './Menu.js'
 //Import axios to load and get venues from Foursquare API. Source. https://www.npmjs.com/package/axios
 import axios from 'axios'
 
@@ -91,15 +92,25 @@ class App extends Component {
       });
     })
 
-
+    
   }
+  
+  filterVenues= (venuesMatch) => {
+    this.setState({venues: venuesMatch})
+  }
+
 
   render() {
     return (
       <div>
-      <main>
-        <Map/>  
-      </main>
+        <main>
+          <Menu
+            venues={this.state.venues}
+            markers={this.state.markers}
+            filterVenues={this.filterVenues}
+          />
+          <Map/>  
+        </main>
       </div>
     )
   }
