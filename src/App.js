@@ -8,7 +8,8 @@ class App extends Component {
 
   // Declare the state of the venues (array)
   state= {
-    venues: []
+    venues: [],
+    markers: []
   }
 
   componentDidMount(){
@@ -51,29 +52,39 @@ class App extends Component {
   //Initialize map element
   initMap=() => {
     //Create map variable with Google Maps API. Source: https://developers.google.com/maps/documentation/javascript/tutorial
-    var map = new window.google.maps.Map(document.getElementById('map'), {
+    let map = new window.google.maps.Map(document.getElementById('map'), {
       center: {lat: 37.806053, lng: -122.410331},
       zoom: 14
     })
 
     //Create InfoWindows for each marker using Google Maps API. Source: https://developers.google.com/maps/documentation/javascript/infowindows
-    var infowindow = new window.google.maps.InfoWindow()
+    let infowindow = new window.google.maps.InfoWindow()
       //Loop over each venue, add marker and infoWindow
       this.state.venues.forEach(showVenue => {
-        
-      var contentString = `${showVenue.venue.name}`
       
+      
+      let contentString = `
+            <h3 style="font-weight:bold">${showVenue.venue.name}</h3>
+            <p>Address: ${showVenue.venue.location.formattedAddress[0]}</p>
+            <p>${showVenue.venue.location.formattedAddress[1]}</p>
+            <p>${showVenue.venue.location.formattedAddress[2]}</p>
+                          `
+      let title = showVenue.venue.name
       //instantiate the markers for each venue using the Google Maps API. Source: https://developers.google.com/maps/documentation/javascript/markers
-      var marker = new window.google.maps.Marker({
+      let marker = new window.google.maps.Marker({
         //Set marker's position based on the venue's lat and lng data from Foursquare's response
         position: {lat: showVenue.venue.location.lat, lng: showVenue.venue.location.lng},
         map: map,
-        title: showVenue.venue.name
+        title: title,
+        animation: window.google.maps.Animation.DROP
       })
+      
+      //Push the markers to the markers array
+      this.state.markers.push(marker)
       /*Add event listener for each marker. When clicked, infoWindow opens. InfoWindow should close when another
       marker is clicked.*/
       marker.addListener('click', function() {
-        infowindow.setContent(contentString)
+        infowindow.setContent('<div>' + contentString + '</div>');
         infowindow.open(map, marker);
       });
     })
