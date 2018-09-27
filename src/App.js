@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import './App.css';
+import Map from './Map.js'
 //Import axios to load and get venues from Foursquare API. Source. https://www.npmjs.com/package/axios
 import axios from 'axios'
 
@@ -70,6 +71,7 @@ class App extends Component {
             <p>${showVenue.venue.location.formattedAddress[2]}</p>
                           `
       let title = showVenue.venue.name
+      
       //instantiate the markers for each venue using the Google Maps API. Source: https://developers.google.com/maps/documentation/javascript/markers
       let marker = new window.google.maps.Marker({
         //Set marker's position based on the venue's lat and lng data from Foursquare's response
@@ -94,11 +96,11 @@ class App extends Component {
 
   render() {
     return (
-      
+      <div>
       <main>
-        <div id="map"></div>  
+        <Map/>  
       </main>
-    
+      </div>
     )
   }
 }
