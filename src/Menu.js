@@ -53,7 +53,7 @@ class Menu extends Component {
                             <li 
                                 key={index}
                                 tabIndex={index}
-                                className="item" 
+                                className="venue" 
                                 onClick={() => this.triggerMarker(venue.venue.name)}
                             >
                                 {venue.venue.name}
@@ -65,7 +65,7 @@ class Menu extends Component {
 
             {this.state.venues.length === 0 && this.state.query !=='' &&(
                 <ul className="venue-results">
-                    <li className="item">No venues with that name were found.</li>
+                    <li className="venue">No venues with that name were found.</li>
                 </ul>
             )}
             
