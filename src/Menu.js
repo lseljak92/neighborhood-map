@@ -23,21 +23,58 @@ class Menu extends Component {
             this.props.filterVenues(venuesMatch)
         } else {
             this.setState({venues: allVenues})
+               }
         }
 
-    }
+        triggerMarker = (venueTitle) => {
+            this.props.markers.map((marker) => {
+                if(marker.title === venueTitle) {
+                    window.google.maps.event.trigger(marker, 'click');
+                }
+            })
+        }
+        
             
  
    render() {
     //const{venues}=this.props
         return(
-                    <div className="search-venues-bar">
-                    <div className="search-venues-input-wrapper">
-                      <input type="text" placeholder="Search coffee venues" value={ this.state.query } onChange={(event) => this.getInputData(event.target.value)} 
-                      />
-                    </div>
-                  </div>
-       )
+            <div className="venues-menu">
+                <div id="search" className="search-venue">
+                <input type="text" placeholder="Search venues.."
+                onChange={(e) => this.getInputData(e.target.value)}
+                value={this.state.query}
+                id="user-input" aria-label="Search venues" />
+            </div>
+                <div className="results">
+                {this.state.venues.length !== 0 && (
+                    <ul className="venue-results">
+                        {this.state.venues.map((venue, index) => (
+                            <li 
+                                key={index}
+                                tabIndex={index}
+                                className="item" 
+                                onClick={() => this.triggerMarker(venue.venue.name)}
+                            >
+                                {venue.venue.name}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+                </div>
+
+            {this.state.venues.length === 0 && this.state.query !=='' &&(
+                <ul className="venue-results">
+                    <li className="item">No venues with that name were found.</li>
+                </ul>
+            )}
+            
+                 </div>
+                        
+                
+   )
+   
+
 
    }
      
