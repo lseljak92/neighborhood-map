@@ -22,6 +22,7 @@ class App extends Component {
   loadMap=() => {
     renderScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDZPYfsH0OQBZm7e-hULiD43MSrLEHtRdU&callback=initMap")
     window.initMap=this.initMap
+
   }
 
   //Get coffee venues close to North Beach in San Francisco using Foursquare API. Show a limit of 15 venues.
@@ -42,6 +43,7 @@ class App extends Component {
       .then(response => {
         this.setState({
           //Set the state for the venues array. Get data from Foursquare API and add it to the array. Then, loadMap
+          unfilteredVenues: response.data.response.groups[0].items,
           venues: response.data.response.groups[0].items
         }, this.loadMap())
       })
@@ -307,7 +309,7 @@ class App extends Component {
       marker.addListener('click', function() {
         infowindow.setContent('<div>' + contentString + '</div>');
         infowindow.open(map, marker);
-      });
+      })
     })
 
     
@@ -318,11 +320,13 @@ class App extends Component {
   }
 
 
+
   render() {
     return (
       <div>
         <main>
           <Menu
+            unfilteredVenues={this.state.unfilteredVenues}
             venues={this.state.venues}
             markers={this.state.markers}
             filterVenues={this.filterVenues}
@@ -334,15 +338,20 @@ class App extends Component {
   }
 }
 
-  /*Load the Maps Javascript API by creating HTML script element with JavaScript. Referred to Elharony's tutorial video 
-  for guidance. Source: https://www.youtube.com/watch?v=W5LhLZqj76s&index=2&list=PLgOB68PvvmWCGNn8UMTpcfQEiITzxEEA1*/
+  /*Load the Maps Javascript API by creating HTML script element with JavaScript. Referred to https://javascript.info/onload-onerror and to Elharony's tutorial video 
+  for guidance. Source: https://www.youtube.com/watch?v=W5LhLZqj76s&index=2&list=PLgOB68PvvmWCGNn8UMTpcfQEiITzxEEA1.*/
   function renderScript(url) {
     var index=window.document.getElementsByTagName("script")[0]
     var script=window.document.createElement("script")
     script.src=url
     script.async=true
     script.defer=true
+    /* Add oneerror attribute in case Google Maps fails to load*/
+    script.onerror= function() {
+      alert("Error loading " + this.src)
+    }
     index.parentNode.insertBefore(script, index)
   }
+
 
   export default App;
