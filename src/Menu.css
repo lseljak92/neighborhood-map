@@ -12,6 +12,21 @@
 /* Search field when it gets clicked on */
 #user-input :focus{outline: 3px solid #ddd;}
 
+.openMenu {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.bar1,
+.bar2,
+.bar3{
+    width: 35px;
+    height: 5px;
+    background-color: #e0d8ab;
+    margin: 6px 0;
+    transition: o.4s;
+}
+
 /*List of venues*/
 .results {
     display: block;
@@ -20,16 +35,25 @@
     max-width: 300px;
     border: 1px solid #ddd;
     z-index: 1;
-}
-
-.results.close {
-    width: 300px;
-    position: absolute;
     -webkit-transform: translate(-300px, 0);
     transform: translate(-300px, 0);
     transition: transform 0.3s ease;
     -webkit-transform: translate(0, 0);
     transform: translate(0, 0);
+}
+
+.closeMenu {
+    padding-top: 5%;
+    padding-left: 15px;
+    font-size: 12px;
+    color: rgb(121, 113, 113);
+    width:40px;
+    cursor: pointer;
+}
+
+.closeMenu:hover {
+    color: rgb(226, 104, 34);
+    font-weight: 400;
 }
 
 
@@ -48,5 +72,12 @@
     cursor: pointer;
 }
 
+.openMenu {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
 
 

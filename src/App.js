@@ -49,7 +49,7 @@ class App extends Component {
       })
       //Error handling
       .catch(error => {
-        console.log("Something went wrong, please refresh the page. Error " + error)
+        alert("Something went wrong when loading Foursquare API, please refresh the page.")
       })
   }
 
@@ -319,8 +319,6 @@ class App extends Component {
     this.setState({venues: venuesMatch})
   }
 
-
-
   render() {
     return (
       <div>
@@ -352,6 +350,8 @@ class App extends Component {
     }
     index.parentNode.insertBefore(script, index)
   }
+
+
 
 
   export default App;
